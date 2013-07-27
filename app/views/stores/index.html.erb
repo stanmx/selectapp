@@ -1,12 +1,20 @@
+<%= debug @cities %>
+
 <h1>Listing stores</h1>
+<script type="text/javascript">
+  $(document).ready(function(){
+ $('#_stores_state_id').chained('#_stores_id');
+});
+</script>
 
 <div id="search">
-  <%= form_for stores_path, :method => :get do %>
+  <%= form_for stores_path, :method => :get do |f| %>
     <fieldset>
       <label>State</label>
-      <%= select_tag :fstate, options_for_select(State.all.map {|x| [ x.name, x.name ]}) %>
+      <%= f.select :id, @states.map {|comp| [comp.name, comp.id]}, {:include_blank => true} %>
+
       <label>City</label>
-      <%= select_tag :tcity, options_for_select(City.all.map {|x| [ x.name, x.name ]}) %>
+      <%= f.select :state_id, @cities.map {|cty| [cty.name, cty.id, :class =>cty.state_id]}, {:include_blank => true} %>
       <%= submit_tag "Search", :name => nil %>
     </fieldset>
   <% end %>
