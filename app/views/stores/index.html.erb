@@ -1,0 +1,41 @@
+<h1>Listing stores</h1>
+
+<div id="search">
+  <%= form_for stores_path, :method => :get do %>
+    <fieldset>
+      <label>State</label>
+      <%= select_tag :fstate, options_for_select(State.all.map {|x| [ x.name, x.name ]}) %>
+      <label>City</label>
+      <%= select_tag :tcity, options_for_select(City.all.map {|x| [ x.name, x.name ]}) %>
+      <%= submit_tag "Search", :name => nil %>
+    </fieldset>
+  <% end %>
+</div><br />
+
+<table>
+  <tr>
+    <th>State</th>
+    <th>City</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stores.each do |store| %>
+  <tr>
+    <td><%= store.city.state.name %></td>
+    <td><%= store.city.name %></td>
+    <td><%= store.name %></td>
+    <td><%= store.address %></td>
+    <td><%= link_to 'Show', store %></td>
+    <td><%= link_to 'Edit', edit_store_path(store) %></td>
+    <td><%= link_to 'Destroy', store, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Store', new_store_path %>
