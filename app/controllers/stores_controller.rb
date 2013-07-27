@@ -1,8 +1,11 @@
 class StoresController < ApplicationController
+
   # GET /stores
   # GET /stores.json
   def index
-    @stores = Store.location(params[:fstate],params[:tcity])
+    @stores = Store.all
+    @cities = City.all
+    @states = State.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,4 +85,6 @@ class StoresController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 end
