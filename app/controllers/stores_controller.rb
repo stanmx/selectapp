@@ -3,9 +3,21 @@ class StoresController < ApplicationController
   # GET /stores
   # GET /stores.json
   def index
-    @stores = Store.all
-    @cities = City.all
+    @stores = Store.location(params[:fstate],params[:fcity])
+
+    # dropmenu states
     @states = State.all
+    @states_for_dropdown = []
+    @states.each do |i|
+      @states_for_dropdown = @states_for_dropdown << [i.name,i.name]
+    end
+    
+    #dropmenu cities
+    @cities = City.all
+    @cities_for_dropdown = []
+    @cities.each do |i|
+      @cities_for_dropdown = @cities_for_dropdown << [i.name,i.name,{:class => i.state.name}]
+    end
 
     respond_to do |format|
       format.html # index.html.erb
